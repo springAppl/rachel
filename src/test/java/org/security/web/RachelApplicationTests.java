@@ -1,4 +1,4 @@
-package org.security.web.rachel;
+package org.security.web;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

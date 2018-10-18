@@ -1,38 +1,31 @@
-package org.security.web.rachel;
+package org.security.web;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
-public class CustomUserDetails implements UserDetails {
-    private List<GrantedAuthority> authorities;
+public class FingerPrintUserDetails extends User implements UserDetails {
 
-    private String password;
-
-    private String username;
-
-    public CustomUserDetails(String username, String password){
-        this.username = username;
-        this.password = password;
-        authorities = Collections.emptyList();
+    public FingerPrintUserDetails(User user) {
+        super(user.getId(), user.getName(), user.getFingerPrint());
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return Collections.emptyList();
     }
 
     @Override
     public String getPassword() {
-        return password;
+        return getFingerPrint();
     }
 
     @Override
     public String getUsername() {
-        return username;
+        return getName();
     }
 
     @Override

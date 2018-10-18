@@ -1,7 +1,8 @@
-package org.security.web.rachel;
+package org.security.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,7 +14,8 @@ import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMap
 import org.springframework.security.core.authority.mapping.NullAuthoritiesMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,29 +41,6 @@ public class RachelApplication {
 
 	@GetMapping("/api/test")
 	public String test(){
-		return "hello the world";
-	}
-
-	@Configuration
-	public static class SecurityConfig extends WebSecurityConfigurerAdapter {
-		@Override
-		protected void configure(HttpSecurity http) throws Exception {
-			http
-					.userDetailsService(userDetailsService())
-					.antMatcher("/api/**")
-					.authorizeRequests()
-					.mvcMatchers(HttpMethod.GET, "/api/test").authenticated()
-					.mvcMatchers(HttpMethod.POST, "/api/login").permitAll()
-					.mvcMatchers(HttpMethod.PUT, "/api/logout").authenticated()
-					.and()
-					.formLogin()
-					.disable()
-					.logout()
-					.disable()
-					.cors()
-					.disable()
-					.csrf()
-					.disable();
-		}
+		return "you are authenticated";
 	}
 }
