@@ -14,11 +14,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .userDetailsService(userDetailsService())
-                .antMatcher("/api/**")
                 .addFilterAfter(fingerPrintFilter(), SecurityContextPersistenceFilter.class)
                 .authenticationProvider(fingerPrintProvider())
                 .authorizeRequests()
                 .mvcMatchers(HttpMethod.GET, "/api/test").authenticated()
+                //基于controller的登陆,登出配置
                 .mvcMatchers(HttpMethod.POST, "/api/login").permitAll()
                 .mvcMatchers(HttpMethod.PUT, "/api/logout").authenticated()
                 .and()
